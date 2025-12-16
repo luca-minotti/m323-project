@@ -1,4 +1,8 @@
-package src.ch.bbzbl.m323;
+package src;
+
+import src.ch.bbzbl.m323.CsvLoader;
+import src.ch.bbzbl.m323.DeathRecord;
+import src.ch.bbzbl.m323.DeathStatisticsImperative;
 
 import java.util.List;
 
