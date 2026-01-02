@@ -6,7 +6,7 @@ import src.ch.bbzbl.m323.DeathStatisticsImperative;
 
 import java.util.List;
 
-public class Main {
+public class MainImperative {
 
     public static void main(String[] args) {
 
