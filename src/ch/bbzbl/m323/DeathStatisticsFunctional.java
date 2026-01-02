@@ -6,15 +6,11 @@ import java.util.stream.IntStream;
 
 public class DeathStatisticsFunctional {
 
-    // kleine Hilfsmethode: schöner Monatsname optional
     private static String monthLabel(int month) {
-        return String.valueOf(month); // oder z.B. "01", "02" ...
+        return String.valueOf(month);
     }
 
     public static void topThreeMonths(List<DeathRecord> records, int year) {
-
-        // 1) Nur die "Alle/Alle"-Zeilen für das Jahr
-        // 2) Pro Monat -> deaths
         Map<Integer, Integer> monthToDeaths = records.stream()
                 .filter(r -> r.getYear() == year)
                 .filter(r -> r.getGender().equalsIgnoreCase("Alle"))
@@ -22,10 +18,9 @@ public class DeathStatisticsFunctional {
                 .collect(Collectors.toMap(
                         DeathRecord::getMonth,
                         DeathRecord::getDeaths,
-                        (a, b) -> a // falls doppelt: nimm erstes
+                        (a, b) -> a
                 ));
 
-        // Top 3 ausgeben
         System.out.println("Top 3 Monate – Jahr " + year);
         System.out.println("------------------------------------");
         System.out.printf("%-10s | %-10s%n", "Monat", "Todesfälle");
@@ -38,9 +33,6 @@ public class DeathStatisticsFunctional {
     }
 
     public static void compareGenders(List<DeathRecord> records, int year) {
-
-        // Hier bleibt dein ursprüngliches Verhalten: Männer/Frauen summieren (nicht "Alle")
-        // und Altersgruppe != Alle, damit es nicht doppelt zählt.
         Map<String, Integer> totals = records.stream()
                 .filter(r -> r.getYear() == year)
                 .filter(r -> !r.getAgeGroup().equalsIgnoreCase("Alle"))
@@ -62,8 +54,6 @@ public class DeathStatisticsFunctional {
     }
 
     public static void allAgeGroups(List<DeathRecord> records, int year) {
-
-        // gleiche Reihenfolge wie vorher
         List<String> ageGroups = List.of(
                 "0-4", "5-9", "10-14", "15-19", "20-24",
                 "25-29", "30-34", "35-39", "40-44",
@@ -72,8 +62,6 @@ public class DeathStatisticsFunctional {
                 "85-89", "90-94", "95-99", "100+"
         );
 
-        // Nur Geschlecht=Alle, Altersgruppe!=Alle und Jahr passend
-        // dann gruppieren nach Altersgruppe und summieren
         Map<String, Integer> ageGroupTotals = records.stream()
                 .filter(r -> r.getYear() == year)
                 .filter(r -> r.getGender().equalsIgnoreCase("Alle"))
@@ -88,14 +76,12 @@ public class DeathStatisticsFunctional {
         System.out.printf("%-12s | %-10s%n", "Altersgruppe", "Todesfälle");
         System.out.println("------------------------------------------");
 
-        // in definierter Reihenfolge ausgeben
         ageGroups.forEach(ag ->
                 System.out.printf("%-12s | %-10d%n", ag, ageGroupTotals.getOrDefault(ag, 0))
         );
     }
 
     public static void totalDeathsOneYear(List<DeathRecord> records, int year) {
-
         int total = records.stream()
                 .filter(r -> r.getYear() == year)
                 .filter(r -> r.getGender().equalsIgnoreCase("Alle"))
@@ -109,7 +95,6 @@ public class DeathStatisticsFunctional {
     }
 
     public static void totalDeathsMultipleYears(List<DeathRecord> records, int fromYear, int toYear) {
-
         int total = records.stream()
                 .filter(r -> r.getYear() >= fromYear && r.getYear() <= toYear)
                 .filter(r -> r.getGender().equalsIgnoreCase("Alle"))
@@ -128,7 +113,6 @@ public class DeathStatisticsFunctional {
             int toYear,
             String[] ageGroupsToCompare
     ) {
-
         System.out.println("Vergleich Altersgruppen über Jahre");
         System.out.println("Geschlecht: Alle");
         System.out.println("----------------------------------------------");
@@ -140,10 +124,8 @@ public class DeathStatisticsFunctional {
         System.out.println();
         System.out.println("----------------------------------------------");
 
-        // Für jedes Jahr eine Zeile
         IntStream.rangeClosed(fromYear, toYear)
                 .forEach(year -> {
-
                     Map<String, Integer> totalsForYear = records.stream()
                             .filter(r -> r.getYear() == year)
                             .filter(r -> r.getGender().equalsIgnoreCase("Alle"))
@@ -168,8 +150,6 @@ public class DeathStatisticsFunctional {
             int year2,
             String[] ageGroupsToCompare
     ) {
-
-        // helper: Map für ein Jahr bauen
         Map<String, Integer> totalsYear1 = totalsForAgeGroupsInYear(records, year1, ageGroupsToCompare);
         Map<String, Integer> totalsYear2 = totalsForAgeGroupsInYear(records, year2, ageGroupsToCompare);
 
