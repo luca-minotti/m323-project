@@ -2,8 +2,24 @@ package src.ch.bbzbl.m323;
 
 import java.util.List;
 
+/**
+ * DeathStatisticsImperative
+ *
+ * Berechnet unterschiedliche Statistiken zu Todesfällen aus einem öffentlichen Datensatz (https://data.bs.ch/explore/dataset/100173)
+ * mit imperativer Implementation.
+ *
+ * @author Furkan Güner & Luca Minotti
+ * @version 2.0
+ */
 public class DeathStatisticsImperative {
 
+    /**
+     * Gibt die Top 3 Monate mit den meisten Todesfällen für ein bestimmtes Jahr aus.
+     * Es werden alle Altersgruppen und Geschlechter berücksichtigt.
+     *
+     * @param records - Liste aller DeathRecords
+     * @param year - Jahr, wofür die Ausgabe gemacht werden soll
+     */
     public static void topThreeMonths(List<DeathRecord> records, int year) {
         int[] monthTotals = new int[12];
 
@@ -23,7 +39,7 @@ public class DeathStatisticsImperative {
             monthTotals[r.getMonth() - 1] = r.getDeaths();
         }
 
-        System.out.println("Top 3 Monate – Jahr " + year);
+        System.out.println("Top 3 Monate – Jahr " + year + " (Imperativ)");
         System.out.println("------------------------------------");
         System.out.printf("%-10s | %-10s%n", "Monat", "Todesfälle");
         System.out.println("------------------------------------");
@@ -51,6 +67,13 @@ public class DeathStatisticsImperative {
         }
     }
 
+    /**
+     * Vergleicht die Todesfälle von Männern und Frauen für ein bestimmtes Jahr.
+     * Es werden alle Altersgruppen berücksichtigt.
+     *
+     * @param records - Liste aller DeathRecords
+     * @param year - Jahr, wofür die Ausgabe gemacht werden soll
+     */
     public static void compareGenders(List<DeathRecord> records, int year) {
         int male = 0;
         int female = 0;
@@ -69,7 +92,7 @@ public class DeathStatisticsImperative {
             }
         }
 
-        System.out.println("Geschlechtervergleich – Jahr " + year);
+        System.out.println("Geschlechtervergleich – Jahr " + year + " (Imperativ)");
         System.out.println("----------------------------------------");
         System.out.printf("%-12s | %-10s%n", "Geschlecht", "Todesfälle");
         System.out.println("----------------------------------------");
@@ -77,6 +100,13 @@ public class DeathStatisticsImperative {
         System.out.printf("%-12s | %-10d%n", "Frauen", female);
     }
 
+    /**
+     * Gibt die Todesfälle für bestimmte Altersgruppen für ein bestimmtes Jahr aus.
+     * Es werden alle Geschlechter berücksichtigt.
+     *
+     * @param records - Liste aller DeathRecords
+     * @param year - Jahr, wofür die Ausgabe gemacht werden soll
+     */
     public static void allAgeGroups(List<DeathRecord> records, int year) {
         String[] ageGroups = {
                 "0-4", "5-9", "10-14", "15-19", "20-24",
@@ -109,7 +139,7 @@ public class DeathStatisticsImperative {
             }
         }
 
-        System.out.println("Altersgruppen – Gesamtjahr " + year);
+        System.out.println("Altersgruppen – Gesamtjahr " + year + " (Imperativ)");
         System.out.println("------------------------------------------");
         System.out.printf("%-12s | %-10s%n", "Altersgruppe", "Todesfälle");
         System.out.println("------------------------------------------");
@@ -123,6 +153,13 @@ public class DeathStatisticsImperative {
         }
     }
 
+    /**
+     * Gibt die Gesamtzahl der Todesfälle für ein bestimmtes Jahr aus.
+     * Es werden alle Geschlechter und Altersgruppen berücksichtigt.
+     *
+     * @param records - Liste aller DeathRecords
+     * @param year - Jahr, wofür die Ausgabe gemacht werden soll
+     */
     public static void totalDeathsOneYear(List<DeathRecord> records, int year) {
         int total = 0;
 
@@ -142,11 +179,19 @@ public class DeathStatisticsImperative {
             total += r.getDeaths();
         }
 
-        System.out.println("Gesamtzahl Todesfälle – Jahr " + year);
+        System.out.println("Gesamtzahl Todesfälle – Jahr " + year + " (Imperativ)");
         System.out.println("------------------------------------");
         System.out.printf("Total: %d%n", total);
     }
 
+    /**
+     * Gibt die Gesamtzahl der Todesfälle über mehrere Jahre aus.
+     * Es werden alle Geschlechter und Altersgruppen berücksichtigt.
+     *
+     * @param records - Liste aller DeathRecords
+     * @param fromYear - Startjahr der Auswertung
+     * @param toYear - Endjahr der Auswertung
+     */
     public static void totalDeathsMultipleYears(List<DeathRecord> records, int fromYear, int toYear) {
         int total = 0;
 
@@ -166,19 +211,27 @@ public class DeathStatisticsImperative {
             total += r.getDeaths();
         }
 
-        System.out.println("Gesamtzahl Todesfälle – Jahre " + fromYear + " bis " + toYear);
+        System.out.println("Gesamtzahl Todesfälle – Jahre " + fromYear + " bis " + toYear + " (Imperativ)");
         System.out.println("-------------------------------------------");
         System.out.printf("Total: %d%n", total);
     }
 
+    /**
+     * Vergleicht verschiedene Altersgruppen über mehrere Jahre.
+     * Es werden alle Geschlechter berücksichtigt.
+     *
+     * @param records - Liste aller DeathRecords
+     * @param fromYear - Startjahr der Auswertung
+     * @param toYear - Endjahr der Auswertung
+     * @param ageGroupsToCompare - Altersgruppen, die verglichen werden sollen
+     */
     public static void compareAgeGroupsMultipleYears(
             List<DeathRecord> records,
             int fromYear,
             int toYear,
             String[] ageGroupsToCompare
     ) {
-        System.out.println("Vergleich Altersgruppen über Jahre");
-        System.out.println("Geschlecht: Alle");
+        System.out.println("Vergleich Altersgruppen über Jahre " + fromYear + " bis " + toYear + " (Imperativ)");
         System.out.println("----------------------------------------------");
 
         System.out.printf("%-6s", "Jahr");
@@ -220,6 +273,15 @@ public class DeathStatisticsImperative {
         }
     }
 
+    /**
+     * Vergleicht verschiedene Altersgruppen für exakt zwei Jahre.
+     * Es werden alle Geschlechter berücksichtigt.
+     *
+     * @param records - Liste aller DeathRecords
+     * @param year1 - Erstes Jahr für den Vergleich
+     * @param year2 - Zweites Jahr für den Vergleich
+     * @param ageGroupsToCompare - Altersgruppen, die verglichen werden sollen
+     */
     public static void compareAgeGroupTwoYears(
             List<DeathRecord> records,
             int year1,
@@ -257,8 +319,7 @@ public class DeathStatisticsImperative {
             }
         }
 
-        System.out.println("Vergleich Altersgruppen");
-        System.out.println("Geschlecht: Alle");
+        System.out.println("Vergleich Altersgruppen " + year1 + " zu " + year2 + " (Imperativ)");
         System.out.println("----------------------------------------------");
 
         System.out.printf("%-6s", "Jahr");

@@ -4,12 +4,28 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+/**
+ * DeathStatisticsFunctional
+ *
+ * Berechnet unterschiedliche Statistiken zu Todesfällen aus einem öffentlichen Datensatz (https://data.bs.ch/explore/dataset/100173)
+ * mit funktionaler Implementation.
+ *
+ * @author Furkan Güner & Luca Minotti
+ * @version 2.0
+ */
 public class DeathStatisticsFunctional {
 
     private static String monthLabel(int month) {
         return String.valueOf(month);
     }
 
+    /**
+     * Gibt die Top 3 Monate mit den meisten Todesfällen für ein bestimmtes Jahr aus.
+     * Es werden alle Altersgruppen und Geschlechter berücksichtigt.
+     *
+     * @param records - Liste aller DeathRecords
+     * @param year - Jahr, wofür die Ausgabe gemacht werden soll
+     */
     public static void topThreeMonths(List<DeathRecord> records, int year) {
         Map<Integer, Integer> monthToDeaths = records.stream()
                 .filter(r -> r.getYear() == year)
@@ -21,7 +37,7 @@ public class DeathStatisticsFunctional {
                         (a, b) -> a
                 ));
 
-        System.out.println("Top 3 Monate – Jahr " + year);
+        System.out.println("Top 3 Monate – Jahr " + year + " (Funktional)");
         System.out.println("------------------------------------");
         System.out.printf("%-10s | %-10s%n", "Monat", "Todesfälle");
         System.out.println("------------------------------------");
@@ -32,6 +48,13 @@ public class DeathStatisticsFunctional {
                 .forEach(e -> System.out.printf("%-10s | %-10d%n", monthLabel(e.getKey()), e.getValue()));
     }
 
+    /**
+     * Vergleicht die Todesfälle von Männern und Frauen für ein bestimmtes Jahr.
+     * Es werden alle Altersgruppen berücksichtigt.
+     *
+     * @param records - Liste aller DeathRecords
+     * @param year - Jahr, wofür die Ausgabe gemacht werden soll
+     */
     public static void compareGenders(List<DeathRecord> records, int year) {
         Map<String, Integer> totals = records.stream()
                 .filter(r -> r.getYear() == year)
@@ -45,7 +68,7 @@ public class DeathStatisticsFunctional {
         int male = totals.getOrDefault("männer", 0);
         int female = totals.getOrDefault("frauen", 0);
 
-        System.out.println("Geschlechtervergleich – Jahr " + year);
+        System.out.println("Geschlechtervergleich – Jahr " + year + " (Funktional)");
         System.out.println("----------------------------------------");
         System.out.printf("%-12s | %-10s%n", "Geschlecht", "Todesfälle");
         System.out.println("----------------------------------------");
@@ -53,6 +76,13 @@ public class DeathStatisticsFunctional {
         System.out.printf("%-12s | %-10d%n", "Frauen", female);
     }
 
+    /**
+     * Gibt die Todesfälle für bestimmte Altersgruppen für ein bestimmtes Jahr aus.
+     * Es werden alle Geschlechter berücksichtigt.
+     *
+     * @param records - Liste aller DeathRecords
+     * @param year - Jahr, wofür die Ausgabe gemacht werden soll
+     */
     public static void allAgeGroups(List<DeathRecord> records, int year) {
         List<String> ageGroups = List.of(
                 "0-4", "5-9", "10-14", "15-19", "20-24",
@@ -71,7 +101,7 @@ public class DeathStatisticsFunctional {
                         Collectors.summingInt(DeathRecord::getDeaths)
                 ));
 
-        System.out.println("Altersgruppen – Gesamtjahr " + year);
+        System.out.println("Altersgruppen – Gesamtjahr " + year + " (Funktional)");
         System.out.println("------------------------------------------");
         System.out.printf("%-12s | %-10s%n", "Altersgruppe", "Todesfälle");
         System.out.println("------------------------------------------");
@@ -81,6 +111,13 @@ public class DeathStatisticsFunctional {
         );
     }
 
+    /**
+     * Gibt die Gesamtzahl der Todesfälle für ein bestimmtes Jahr aus.
+     * Es werden alle Geschlechter und Altersgruppen berücksichtigt.
+     *
+     * @param records - Liste aller DeathRecords
+     * @param year - Jahr, wofür die Ausgabe gemacht werden soll
+     */
     public static void totalDeathsOneYear(List<DeathRecord> records, int year) {
         int total = records.stream()
                 .filter(r -> r.getYear() == year)
@@ -89,11 +126,20 @@ public class DeathStatisticsFunctional {
                 .mapToInt(DeathRecord::getDeaths)
                 .sum();
 
-        System.out.println("Gesamtzahl Todesfälle – Jahr " + year);
+        System.out.println("Gesamtzahl Todesfälle – Jahr " + year + " (Funktional)");
         System.out.println("------------------------------------");
         System.out.printf("Total: %d%n", total);
     }
 
+
+    /**
+     * Gibt die Gesamtzahl der Todesfälle über mehrere Jahre aus.
+     * Es werden alle Geschlechter und Altersgruppen berücksichtigt.
+     *
+     * @param records - Liste aller DeathRecords
+     * @param fromYear - Startjahr der Auswertung
+     * @param toYear - Endjahr der Auswertung
+     */
     public static void totalDeathsMultipleYears(List<DeathRecord> records, int fromYear, int toYear) {
         int total = records.stream()
                 .filter(r -> r.getYear() >= fromYear && r.getYear() <= toYear)
@@ -102,19 +148,27 @@ public class DeathStatisticsFunctional {
                 .mapToInt(DeathRecord::getDeaths)
                 .sum();
 
-        System.out.println("Gesamtzahl Todesfälle – Jahre " + fromYear + " bis " + toYear);
+        System.out.println("Gesamtzahl Todesfälle – Jahre " + fromYear + " bis " + toYear + " (Funktional)");
         System.out.println("-------------------------------------------");
         System.out.printf("Total: %d%n", total);
     }
 
+    /**
+     * Vergleicht verschiedene Altersgruppen über mehrere Jahre.
+     * Es werden alle Geschlechter berücksichtigt.
+     *
+     * @param records - Liste aller DeathRecords
+     * @param fromYear - Startjahr der Auswertung
+     * @param toYear - Endjahr der Auswertung
+     * @param ageGroupsToCompare - Altersgruppen, die verglichen werden sollen
+     */
     public static void compareAgeGroupsMultipleYears(
             List<DeathRecord> records,
             int fromYear,
             int toYear,
             String[] ageGroupsToCompare
     ) {
-        System.out.println("Vergleich Altersgruppen über Jahre");
-        System.out.println("Geschlecht: Alle");
+        System.out.println("Vergleich Altersgruppen über Jahre " + fromYear + " bis " + toYear + " (Funktional)");
         System.out.println("----------------------------------------------");
 
         System.out.printf("%-6s", "Jahr");
@@ -144,6 +198,15 @@ public class DeathStatisticsFunctional {
                 });
     }
 
+    /**
+     * Vergleicht verschiedene Altersgruppen für exakt zwei Jahre.
+     * Es werden alle Geschlechter berücksichtigt.
+     *
+     * @param records - Liste aller DeathRecords
+     * @param year1 - Erstes Jahr für den Vergleich
+     * @param year2 - Zweites Jahr für den Vergleich
+     * @param ageGroupsToCompare - Altersgruppen, die verglichen werden sollen
+     */
     public static void compareAgeGroupTwoYears(
             List<DeathRecord> records,
             int year1,
@@ -153,8 +216,7 @@ public class DeathStatisticsFunctional {
         Map<String, Integer> totalsYear1 = totalsForAgeGroupsInYear(records, year1, ageGroupsToCompare);
         Map<String, Integer> totalsYear2 = totalsForAgeGroupsInYear(records, year2, ageGroupsToCompare);
 
-        System.out.println("Vergleich Altersgruppen");
-        System.out.println("Geschlecht: Alle");
+        System.out.println("Vergleich Altersgruppen " + year1 + " zu " + year2 + " (Funktional)");
         System.out.println("----------------------------------------------");
 
         System.out.printf("%-6s", "Jahr");
