@@ -16,7 +16,7 @@ public class MainImperative {
         // DeathStatisticsImperative.allAgeGroups(records, 2025);
         // DeathStatisticsImperative.topThreeMonths(records, 2024);
         // DeathStatisticsImperative.totalDeathsOneYear(records, 2024);
-        // DeathStatisticsImperative.totalDeathsMultipleYears(records, 2024, 2025);
+        // DeathStatisticsImperative.totalDeathsMultipleYears(records, 2019, 2025);
 
         /*
         String[] allAgeGroups = {
@@ -31,6 +31,6 @@ public class MainImperative {
         // String[] ageGroups = { "65-69", "70-74", "75-79" };
 
         // DeathStatisticsImperative.compareAgeGroupsMultipleYears(records, 2018, 2022, ageGroups);
-        // DeathStatisticsImperative.compareAgeGroupTwoYears(records, 2019, 2023, ageGroups);
+        // DeathStatisticsImperative.compareAgeGroupTwoYears(records, 2016, 2020, ageGroups);
     }
 }
